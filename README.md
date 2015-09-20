@@ -1,8 +1,8 @@
 # DecisionTrees
-Goal of this project is to build Classification Decision Trees and Regression Decision trees without using any Machine learning libraries
+Goal of this project is to build Multiclass Decision Trees and Regression Decision trees without using any Machine learning libraries
 
 
-#Build Classification decision Trees with Numerical features using C4.5/ID3 algorithm
+#Build Multiclass decision Trees with Numerical features using C4.5/ID3 algorithm
 
 IDE algorithm : https://en.wikipedia.org/wiki/ID3_algorithm.
 C4.5 algorithm: https://en.wikipedia.org/wiki/C4.5_algorithm
