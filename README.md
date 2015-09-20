@@ -5,7 +5,8 @@ Goal of this project is to build Multiclass Decision Trees and Regression Decisi
 #Build Multiclass decision Trees with Numerical features using C4.5/ID3 algorithm
 
 IDE algorithm : https://en.wikipedia.org/wiki/ID3_algorithm.
-C4.5 algorithm: https://en.wikipedia.org/wiki/C4.5_algorithm
+
+C4.5 algorithm: https://en.wikipedia.org/wiki/C4.5_algorithm.
  
 In this project, I worked with two datasets:
 
@@ -43,6 +44,7 @@ deviation across the folds.
 
 #Build Regression decision Trees with Numerical features using ID3/CART algorithm.
 For this project, I implemented regression trees on housing dataset:
+
 • Housing: This is a regression dataset where the task is to predict the value of houses in the
 suburbs of Boston based on thirteen features that describe different aspects that are relevant
 to determining the value of a house, such as the number of rooms, levels of pollution in the
