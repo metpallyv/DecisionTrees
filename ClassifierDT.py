@@ -9,6 +9,9 @@ from collections import Counter
 from numpy import *
 feature = []
 
+#Multiclass classifier decision tree using ID3 algorithm
+
+#normalize the entire dataset prior to learning using min-max normalization 
 def normalize(matrix):
     a= np.array(matrix)
     a = a.astype(np.float)
@@ -30,20 +33,16 @@ def random_numpy_array(ar):
     #print(arr)
     return arr
 
+#Normalize the data and generate the training labels,training features, test labels and test training
 def generate_set(X):
     #print(X.shape[0])
     Y = X[:,-1]
-    #print(Y.shape,"Y is",Y)
-    #print(Y)
     j = Y.reshape(len(Y),1)
     #print("J is",j)
     new_X = X[:,:-1]
+    #normalize the data step
     normalized_X = normalize(new_X)
-    #print("Normal X",normalized_X)
-    #j = Y.T
-    #print(Y.shape[1])
     normalized_final_X = np.concatenate((normalized_X,j),axis=1)
-    #print("np",normalized_final_X)
     X = normalized_final_X
     size_of_rows = X.shape[0]
     num_test = round(0.1*(X.shape[0]))
@@ -78,15 +77,13 @@ def generate_set(X):
         #print("end is",end)
         start = end
         end = end+num_test
-
     return test_attri_list,test_class_names_list,training_attri_list,training_class_names_list#(X_test,y_test,X_training,y_train)
 
-
+# Iterative Dichotomiser 3 entropy calculation
 def entropy(y):
     class_freq = {}
     attribute_entropy = 0.0
     for i in y:
-
         if class_freq.has_key(i):
             class_freq[i] += 1
         else:
@@ -97,8 +94,8 @@ def entropy(y):
     #print(attribute_entropy)
     return attribute_entropy
 
+#calculating the predicited accuracy
 def accuracy_for_predicted_values(test_class_names1,l):
-
     true_count = 0
     false_count = 0
     for i in range(len(test_class_names1)):
@@ -108,12 +105,11 @@ def accuracy_for_predicted_values(test_class_names1,l):
             false_count += 1
     return true_count, false_count, float(true_count) / len(l)
 
-def build_dict_of_attributes_with_class_values(X,y): #,feature):
-
+#build a dictionary where the key is the class label and values are the features which belong to that class.
+def build_dict_of_attributes_with_class_values(X,y):
     dict_of_attri_class_values = {}
     fea_list =[]
     for i in xrange(X.shape[1]):
-
         fea = i
         l = X[:,i]
         #print(l)
@@ -127,14 +123,11 @@ def build_dict_of_attributes_with_class_values(X,y): #,feature):
             count += 1
         dict_of_attri_class_values[fea]= attribute_list
         fea_list.append(fea)
-        #print(attribute_list)
-            #attribute_list = '''
-    #print(dict_of_attri_class_values)
     return dict_of_attri_class_values,fea_list
-    #features_with_max_gain_and_theta(dict_of_attri_class_values)
 
 def return_features(Y):
     return feature
+#Class node and explanation is self explaination
 class Node(object):
     def __init__(self, val, lchild, rchild,the,leaf):
     #def __init__(self,val,):
@@ -144,9 +137,11 @@ class Node(object):
         self.theta = the
         self.leaf = leaf
 
+    #method to identify if the node is leaf
     def is_leaf(self):
         return self.leaf
 
+    #method to return threshold value
     def ret_thetha(self):
         return self.theta
 
@@ -160,27 +155,29 @@ class Node(object):
         return self.root_right
 
     def __repr__(self):
-        #return (self.root_value,self.root_left,self.root_right,self.theta)
         return "(%r, %r, %r, %r)" %(self.root_value,self.root_left,self.root_right,self.theta)
 
+#Decision tree object
 class DecisionTree(object):
 
     fea_list = []
-
     def __init__(self):
         self.root_node = None
 
+    #fit the decisin tree
     def fit(self, dict_of_everything,cl_val,features,eta_min_val):
         global fea_list
         fea_list = features
         root_node = self.create_decision_tree(dict_of_everything,cl_val,eta_min_val)#,fea_list)
         return root_node
 
+    #method to return the major class value
     def cal_major_class_values(self,class_values):
         data = Counter(class_values)
         data = data.most_common(1)[0][0]
         return data
 
+    #method to calculate best threshold value for each feature
     def cal_best_theta_value(self,ke,attri_list):
         data = []
         class_values = []
@@ -197,14 +194,8 @@ class DecisionTree(object):
         best_index_left_list = []
         best_index_right_list = []
         class_labels_list_after_split = []
-        #print(data)
-        #data = list(data)
         data.sort()
-        #print(len(data), ke)
-        #data = list(data)
-        #print(data)
         for i in range(len(data) - 1):
-
             cur_theta = float(data[i]+data[i+1])/ 2
             index_less_than_theta_list = []
             values_less_than_theta_list = []
@@ -240,7 +231,7 @@ class DecisionTree(object):
         #print(max_info_gain,theta,best_index_left_list, best_index_right_list, class_labels_list_after_split)
         return max_info_gain, theta, best_index_left_list, best_index_right_list, class_labels_list_after_split
 
-
+    #method to select the best feature out of all the features.
     def best_feature(self,dict_rep):
         #dict_theta = {}
         key_value = None
@@ -267,11 +258,7 @@ class DecisionTree(object):
         tmp_list.append(best_index_left_list)
         tmp_list.append(best_index_right_list)
         tmp_list.append(best_class_labels_after_split)
-        #dict_theta[key_value] = tmp_list
-        #print(tmp_list)
-        #print("Best feature is",key_value,best_theta)
         return tmp_list
-
 
     def get_remainder_dict(self,dict_of_everything,index_split):
         global fea_list
@@ -281,8 +268,6 @@ class DecisionTree(object):
             val_list = []
             modified_list = []
             l = dict_of_everything[ke]
-            #print(ke,index_left_split)
-            #print(l)
             for i,v in enumerate(l):
                 #print(i,v)
                 if i not in index_split:
@@ -295,14 +280,16 @@ class DecisionTree(object):
             #print(left_splited_dict)
         return splited_dict,val_list
 
-    def create_decision_tree(self, dict_of_everything,class_val,eta_min_val):#,fea_list):
+    #method to create decision tree
+    def create_decision_tree(self, dict_of_everything,class_val,eta_min_val):
         global fea_list
         #print("Class value is",len(class_val))
-
+        #if all the class labels are same, then we are set
         if len(set(class_val)) ==1:
             #print("Leaf node for set class is",class_val[0],len(class_val))
             root_node =  Node(class_val[0],None,None,0,True)
             return root_node
+        #if the no class vales are less than threshold, we assign the class with max values as the class label    
         elif len(class_val) < eta_min_val:
             majority_val = self.cal_major_class_values(class_val)
             #print("Leaf node for less than 8 is",majority_val, len(class_val))#,class_val)
@@ -310,7 +297,6 @@ class DecisionTree(object):
             return root_node
 
         else:
-
             best_features_list = self.best_feature(dict_of_everything)
             #print(best_features_list)
             node_name = best_features_list[0]
@@ -329,7 +315,7 @@ class DecisionTree(object):
             return root_node
             #print(node_name,theta,len(index_left_split),len(index_right_split))
 
-
+    #method to the labels for the test data
     def predict(self, X, root):
         predicted_list = []
         for row in X:
@@ -344,8 +330,6 @@ class DecisionTree(object):
         #print(dict_test)
         current_node = root
         while not current_node.leaf:
-            '''if current_node.isLeaf():
-                return current_node.value'''
             #print(current_node.root_value,dict_test[current_node.root_value], current_node.theta)
             if dict_test[current_node.root_value] <= current_node.theta:
                 current_node = current_node.root_left
@@ -359,17 +343,21 @@ def main(num_arr, eta_min):
     eta_min_val = round(eta_min*num_arr.shape[0])
     #randomly shuffle the array so that we can divide the data into test/training
     random_arr1 = random_numpy_array(num_arr)
+    #divide data into test labels,test features,training labels, training features
     test_attri_list,test_class_names_list,training_attri_list,training_class_names_list = generate_set(random_arr1)
-
     accu_count = 0
+    #ten fold iteration 
     for i in range(10):
-
+        #build a dictionary with class labels and respective features values belonging to that class
         dict_of_input,fea = build_dict_of_attributes_with_class_values(training_attri_list[i],training_class_names_list[i])
+        #instantiate decision tree instance
         build_dict = DecisionTree()
+        # build the decision tree model.
         dec = build_dict.fit(dict_of_input,training_class_names_list[i],fea,eta_min_val)
+        #predict the class labels for test features
         l = build_dict.predict(test_attri_list[i],dec)
             #print(test_class_names_list[i])
-            #print(l)
+        #calculate the accuracy for the predicted values    
         right,wrong,accu = accuracy_for_predicted_values(test_class_names_list[i],l)
         #print("Number of right values are",right,"Wrong ones are",wrong,"Accuracy is",accu)
         accu_count += accu
