@@ -29,7 +29,7 @@ more than eight instances.
 
 
 (a) For the Iris dataset I used ηmin ∈ {5, 10, 15, 20}, and calculate the accuracy using ten fold
-cross-validation for each value of ηmin
+cross-validation for each value of ηmin.
 
 
 (b) For the Spambase dataset use ηmin ∈ {5, 10, 15, 20, 25}, and calculate the accuracy using ten
@@ -58,4 +58,4 @@ deviation across the folds
 
 More details of this can be found at http://www.ccs.neu.edu/course/cs6140sp15/1_intro_DT_RULES_REG/hw1/Assignment_1_Spring15.pdf
 
-I implemented the code using python.
+I implemented the code using python. I divided the data into 90% training set and 10% test set for each data set. 
