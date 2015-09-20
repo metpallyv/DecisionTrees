@@ -14,12 +14,44 @@ In this project, I worked with two datasets:
 • Iris: has three classes and the task is to accurately predict one of the three sub-types of the
 Iris flower given four different physical features using Decision trees. These features include the length and width
 of the sepals and the petals. There are a total of 150 instances with each class having 50
-instances.
+instances. Here are the features for Iris dataset:
 
+
+1. sepal length in cm 
+2. sepal width in cm 
+3. petal length in cm 
+4. petal width in cm 
+5. class: 
+-- Iris Setosa 
+-- Iris Versicolour 
+-- Iris Virginica
 
 • Spambase: is a binary classification task and the objective is to classify email messages as
 being spam or not. To this end the dataset uses fifty seven text based features to represent
-each email message. There are about 4600 instances
+each email message. There are about 4600 instances. Here are what each feature means :
+
+The last column of 'spambase.data' denotes whether the e-mail was considered spam (1) or not (0), i.e. unsolicited commercial e-mail. Most of the attributes indicate whether a particular word or character was frequently occuring in the e-mail. The run-length attributes (55-57) measure the length of sequences of consecutive capital letters. For the statistical measures of each attribute, see the end of this file. Here are the definitions of the attributes: 
+
+48 continuous real [0,100] attributes of type word_freq_WORD 
+= percentage of words in the e-mail that match WORD, i.e. 100 * (number of times the WORD appears in the e-mail) / total number of words in e-mail. A "word" in this case is any string of alphanumeric characters bounded by non-alphanumeric characters or end-of-string. 
+
+6 continuous real [0,100] attributes of type char_freq_CHAR] 
+= percentage of characters in the e-mail that match CHAR, i.e. 100 * (number of CHAR occurences) / total characters in e-mail 
+
+1 continuous real [1,...] attribute of type capital_run_length_average 
+= average length of uninterrupted sequences of capital letters 
+
+1 continuous integer [1,...] attribute of type capital_run_length_longest 
+= length of longest uninterrupted sequence of capital letters 
+
+1 continuous integer [1,...] attribute of type capital_run_length_total 
+= sum of length of uninterrupted sequences of capital letters 
+= total number of capital letters in the e-mail 
+
+1 nominal {0,1} class attribute of type spam 
+= denotes whether the e-mail was considered spam (1) or not (0), i.e. unsolicited commercial e-mail. 
+
+
 
 Instead of growing full trees, I used an early stopping strategy. To this end, we will impose
 a limit on the minimum number of instances at a leaf node, let this threshold be denoted as ηmin,
