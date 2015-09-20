@@ -11,17 +11,20 @@ from collections import Counter
 from numpy import *#genfromtxt
 feature = []
 
+#normalize the entire dataset prior to learning using min-max normalization
 def normalize(matrix):
     a= np.array(matrix)
     a = a.astype(np.float)
     b = np.apply_along_axis(lambda x: (x-np.min(x))/float(np.max(x)-np.min(x)),0,a)
     return b
 
+# reading from the file using numpy genfromtxt
 def load_csv(file):
     X = genfromtxt(file, delimiter=",",dtype=str)
     #print(X)
     return (X)
 
+#method to randomly shuffle the array
 def random_numpy_array(ar):
     np.random.shuffle(ar)
     #print(arr)
@@ -29,6 +32,7 @@ def random_numpy_array(ar):
     #print(arr)
     return arr
 
+#Normalize the data and generate the training labels,training features, test labels and test training
 def generate_set(X):
     #print(X.shape[0])
     Y = X[:,-1]
@@ -37,14 +41,14 @@ def generate_set(X):
     j = Y.reshape(len(Y),1)
     #print("J is",j)
     new_X = X[:,:-1]
+    #normalizing the data step
     normalized_X = normalize(new_X)
     #print("Normal X",normalized_X)
-    #j = Y.T
-    #print(Y.shape[1])
     normalized_final_X = np.concatenate((normalized_X,j),axis=1)
     #print("np",normalized_final_X)
     X = normalized_final_X
     size_of_rows = X.shape[0]
+    #test data size is 10%
     num_test = round(0.1*(X.shape[0]))
     start = 0
     end = num_test
@@ -58,7 +62,6 @@ def generate_set(X):
         tmp2 = X[end:, :]
         X_training = np.concatenate((tmp1, tmp2), axis=0)
         #X_training = X[:start,:]+ X[end: , :]
-    #print("Before normalizing",X_test)
         y_test = X_test[:, -1]
         y_test = y_test.flatten()
         y_training = X_training[:,-1]
@@ -77,9 +80,9 @@ def generate_set(X):
         #print("end is",end)
         start = end
         end = end+num_test
-
     return test_attri_list,test_class_names_list,training_attri_list,training_class_names_list#(X_test,y_test,X_training,y_train)
 
+#calculating the mean sqaured error
 def mean_sqaured_error(attri_list):
     sum_list = 0
     for i in attri_list:
@@ -89,6 +92,7 @@ def mean_sqaured_error(attri_list):
     mse = sum(se)/len(attri_list)
     return mse
 
+#calculate rmse error for each test instance
 def accuracy_for_predicted_values(test_class_names1,l):
     mse = 0
     for i in range(len(test_class_names1)):
@@ -99,6 +103,7 @@ def accuracy_for_predicted_values(test_class_names1,l):
     return mse
     #return true_count, false_count, float(true_count) / len(l)
 
+#build a dictionary where the key is the class label and values are the features which belong to that class.
 def build_dict_of_attributes_with_class_values(X,y): #,feature):
     dict_of_attri_class_values = {}
     fea_list =[]
@@ -121,18 +126,21 @@ def build_dict_of_attributes_with_class_values(X,y): #,feature):
 
 def return_features(Y):
     return feature
+
+#Class node and explanation is self explaination
 class Node(object):
     def __init__(self, val, lchild, rchild,the,leaf):
-    #def __init__(self,val,):
         self.root_value = val
         self.root_left = lchild
         self.root_right = rchild
         self.theta = the
         self.leaf = leaf
 
+    #method to identify if the node is leaf
     def is_leaf(self):
         return self.leaf
 
+    #method to return threshold value
     def ret_thetha(self):
         return self.theta
 
@@ -148,22 +156,25 @@ class Node(object):
     def __repr__(self):
         return "(%r, %r, %r, %r)" %(self.root_value,self.root_left,self.root_right,self.theta)
 
+#Decision Tree object
 class DecisionTree(object):
 
     fea_list = []
-
     def __init__(self):
         self.root_node = None
 
+    #fit the decision tree
     def fit(self, dict_of_everything,cl_val,eta_min_val):
         root_node = self.create_decision_tree(dict_of_everything,cl_val,eta_min_val)#,fea_list)
         return root_node
 
+    #calculate the mean values for all the class labels
     def cal_mean_class_values(self,class_values):
         mean_val = sum(class_values)/float (len(class_values))
         #print(mean_val)
         return mean_val
 
+    #method to calculate best threshold value for each feature
     def cal_best_theta_value(self,ke,attri_list):
         data = []
         class_values = []
@@ -172,9 +183,6 @@ class DecisionTree(object):
             #val = float(i[0])
             data.append(i[0])
             class_values.append(i[1])
-        #print("length of data is",len(data))
-        #print(data)
-        #min_entropy_for_theta =999
         mse_parent = mean_sqaured_error(class_values)
         #print("mse for parent",mse_parent)
         #print("Entropy of parrent",entropy_of_par_attr)
@@ -186,10 +194,6 @@ class DecisionTree(object):
         #print(data)
         #data = list(data)
         data.sort()
-        #print(data)
-        #print(len(data), ke)
-        #data = list(data)
-        #print(data)
         for i in range(len(data) - 1):
             cur_theta = float(float(data[i])+float(data[i+1]))/ 2
             #print("cur thetha",cur_theta)
@@ -225,6 +229,7 @@ class DecisionTree(object):
 
         return max_mean_sqaure, theta, best_index_left_list, best_index_right_list, class_labels_list_after_split
 
+    #method to select the best feature out of all the features.
     def best_feature(self,dict_rep):
         #dict_theta = {}
         #dict_theta = {}
@@ -275,6 +280,7 @@ class DecisionTree(object):
             splited_dict[ke] = modified_list
         return splited_dict,val_list
 
+    #method to create decision tree
     def create_decision_tree(self, dict_of_everything,class_val,eta_min_val):#,fea_list):
         if len(class_val) < eta_min_val:
             majority_val = self.cal_mean_class_values(class_val)
@@ -304,6 +310,7 @@ class DecisionTree(object):
             root_node = Node(node_name,rightchild,leftchild,theta,False)
             return root_node
 
+    #method to predict the values for test data
     def predict(self, X, root):
         predicted_list = []
         for row in X:
@@ -325,25 +332,28 @@ class DecisionTree(object):
         #print(current_node.root_value,dict_test[current_node.root_value], current_node.theta)
         return current_node.root_value
 
+#main entry for the code
 def main(num_arr, eta_min):
-    #print(num_arr.shape[0])
+    
     eta_min_val = round(eta_min*num_arr.shape[0])
+    #randomly shuffle the array so that we can divide the data into test/training
     random_arr1 = random_numpy_array(num_arr)
+    #divide data into test labels,test features,training labels, training features
     test_attri_list,test_class_names_list,training_attri_list,training_class_names_list = generate_set(random_arr1)
     accu_count = 0
     test_fin_mse = 0
     pred_fin = 0
+    # ten fold iteration for each eta-min value
     for i in range(10):
-        #print("Length of trainin",len(training_attri_list[i]))
-        #print("Lenght of class values", len(training_class_names_list[i]))
+        #build a dictionary with class labels and respective features values belonging to that class
         dict_of_input,fea = build_dict_of_attributes_with_class_values(training_attri_list[i],training_class_names_list[i])
+        #instantiate decision tree instance
         build_dict = DecisionTree()
+        # build the decision tree model.
         dec = build_dict.fit(dict_of_input,training_class_names_list[i],eta_min_val)
-        #print(dec)
-        #print(test_class_names_list)
+        #predict the class labels for test features
         l = build_dict.predict(test_attri_list[i],dec)
-            #print(test_class_names_list[i])
-        #print(l)
+        #calculate the mean squared error measure for predicited test data
         mse = accuracy_for_predicted_values(test_class_names_list[i],l)
         #print("Number of right values are",right,"Wrong ones are",wrong)
         #accu_count += accu
@@ -354,7 +364,9 @@ def main(num_arr, eta_min):
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         newfile = sys.argv[1]
+        #load the data file and do the preprocessing
         num_arr = load_csv(newfile)
+        #for each threshold value run the classifier for 10 cross-validation
         eta_min_list = [0.05,0.10,0.15,0.20]
         for i in eta_min_list:
             main(num_arr,i)
