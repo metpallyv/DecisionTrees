@@ -1,0 +1,5 @@
+Steps to run Multiclass Decision Tree:
+
+MultiClassDT.py iris.csv
+
+MulticlassDT.py spambase.csv
