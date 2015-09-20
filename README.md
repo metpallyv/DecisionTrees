@@ -108,4 +108,4 @@ deviation across the folds
 
 More details of this can be found at http://www.ccs.neu.edu/course/cs6140sp15/1_intro_DT_RULES_REG/hw1/Assignment_1_Spring15.pdf
 
-I implemented the code using python. I divided the data into 90% training set and 10% test set for each data set. 
+I implemented the code using python. I divided the data into 90% training set and 10% test set for each data set and I applied min-max normalization for the all features. 
