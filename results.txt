@@ -1,0 +1,122 @@
+Results for Multiclass Decision Tree 
+
+1-> Iris data set
+
+(' Average accuracy across 10-cross validation for', 0.05, 'is', 0.9466666666666667))
+Standard deviation across the 10-cross validation for 0.05 is 0.0525873758498
+
+(' Average accuracy across 10-cross validation for', 0.1, 'is', 0.9600000000000002)
+Standard deviation across the 10-cross validation for 0.1 is 0.0466137265853
+
+(' Average accuracy across 10-cross validation for', 0.15, 'is', 0.9266666666666667)
+Standard deviation across the 10-cross validation for 0.15 is 0.0662952617341
+
+(' Average accuracy across 10-cross validation for', 0.2, 'is', 0.9466666666666669)
+Standard deviation across the 10-cross validation for 0.2 is 0.0466137265853
+
+2->Spambase Data set
+('Accuracy is ', 0.9130434782608695)
+('Accuracy is ', 0.8717391304347826)
+('Accuracy is ', 0.9130434782608695)
+('Accuracy is ', 0.9043478260869565)
+('Accuracy is ', 0.8934782608695652)
+('Accuracy is ', 0.9173913043478261)
+('Accuracy is ', 0.9260869565217391)
+('Accuracy is ', 0.9043478260869565)
+('Accuracy is ', 0.9108695652173913)
+('Accuracy is ', 0.9130434782608695)
+('Accuracy across 10-cross validation for', 0.05, 'is', 0.9067391304347826)
+Standard deviation across the 10-cross validation for 0.05 is 0.0150421238674
+
+('Accuracy is ', 0.8891304347826087)
+('Accuracy is ', 0.9152173913043479)
+('Accuracy is ', 0.8847826086956522)
+('Accuracy is ', 0.8804347826086957)
+('Accuracy is ', 0.8978260869565218)
+('Accuracy is ', 0.8978260869565218)
+('Accuracy is ', 0.8956521739130435)
+('Accuracy is ', 0.8782608695652174)
+('Accuracy is ', 0.8978260869565218)
+('Accuracy is ', 0.9)
+('Accuracy across 10-cross validation for', 0.1, 'is', 0.893695652173913)
+Standard deviation across the 10-cross validation for 0.10 is 0.0109153624574
+
+('Accuracy is ', 0.8391304347826087)
+('Accuracy is ', 0.8826086956521739)
+('Accuracy is ', 0.8739130434782608)
+('Accuracy is ', 0.8782608695652174)
+('Accuracy is ', 0.8891304347826087)
+('Accuracy is ', 0.8717391304347826)
+('Accuracy is ', 0.8673913043478261)
+('Accuracy is ', 0.85)
+('Accuracy is ', 0.9043478260869565)
+('Accuracy is ', 0.8826086956521739)
+('Accuracy across 10-cross validation for', 0.15, 'is', 0.8739130434782607)
+Standard deviation across the 10-cross validation for 0.15 is0.0187287651932
+
+('Accuracy is ', 0.8217391304347826)
+('Accuracy is ', 0.8)
+('Accuracy is ', 0.8565217391304348)
+('Accuracy is ', 0.8630434782608696)
+('Accuracy is ', 0.8021739130434783)
+('Accuracy is ', 0.7847826086956522)
+('Accuracy is ', 0.8565217391304348)
+('Accuracy is ', 0.8543478260869565)
+('Accuracy is ', 0.8543478260869565)
+('Accuracy is ', 0.8630434782608696)
+('Accuracy across 10-cross validation for', 0.2, 'is', 0.8356521739130436)
+Standard deviation across the 10-cross validation for 0.20 is 0.030265228183
+
+
+3-> Housing Data set
+
+17.0465881149
+10.7462848555
+16.7603835858
+25.1192519386
+19.768681827
+25.424495592
+23.0406798853
+17.5744421675
+6.89735571213
+25.5983335503
+('Average MSE for eta min of', 0.05, 'is', 18.79764972290921)
+Standard deviation across the 10-cross validation for 0.05 is 6.36158287549
+
+15.5073046644
+17.5807610279
+12.9193496592
+10.2320787316
+26.5678742435
+14.4065678873
+21.4536271681
+40.5645826485
+23.342833357
+21.9372966696
+('Average MSE for eta min of', 0.1, 'is', 20.45122760570997)
+Standard deviation across the 10-cross validation for 0.10 is 8.71725657521
+16.111203409
+25.8643040357
+28.218006351
+17.7101490543
+31.0124274514
+24.022645601
+65.2681549916
+23.7698267602
+17.4608121996
+8.48504564988
+('Average MSE for eta min of', 0.15, 'is', 25.792257550375645)
+Standard deviation across the 10-cross validation for 0.15 is 15.3720659557
+
+22.8096801172
+25.795220631
+14.6599758047
+20.6961586252
+18.6613273424
+37.1806036786
+36.3288438377
+44.0059934235
+31.1531680334
+24.0479034628
+('Average MSE for eta min of', 0.2, 'is', 27.533887495648553)
+Standard deviation across the 10-cross validation for 0.20 is 9.33063949211
